@@ -1,0 +1,24 @@
+{
+  "name": "slack-gpt",
+  "version": "1.0.0",
+  "private": true,
+  "main": "build/index.js",
+  "description": "slack gpt with cloud functions",
+  "scripts": {
+    "start": "node ./build/index.js",
+    "build": "tsc --outDir build",
+    "build:watch": "tsc -w"
+  },
+  "dependencies": {
+    "@slack/bolt": "^3.13.2",
+    "@types/html-to-text": "^9.0.1",
+    "@types/url-parse": "^1.4.8",
+    "axios": "^1.4.0",
+    "dotenv": "^16.3.1",
+    "html-to-text": "^9.0.5",
+    "langchain": "^0.0.118",
+    "openai": "^3.3.0",
+    "typescript": "^5.1.6",
+    "url-parse": "^1.5.10"
+  }
+}

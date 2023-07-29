@@ -1,0 +1,5 @@
+.env.dev
+build
+envs
+node_modules
+.vscode
