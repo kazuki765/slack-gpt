@@ -6,21 +6,40 @@ const openai = new OpenAIApi(
   new Configuration({ apiKey: process.env.OPENAI_API_KEY })
 );
 
+// const SUMMARIZE_PROMPT = `
+
+// `;
+
 export async function getSummaryFromText(text: string): Promise<string> {
+  console.log(text);
   return await openai
+    // .createCompletion({
+    //   model: "text-davinci-003",
+    //   prompt: getSummarizePrompt(text),
+    //   temperature: 0,
+    //   max_tokens: 4096,
+    // })
     .createChatCompletion({
       model: "gpt-3.5-turbo-16k",
       messages: [
-        { role: "system", content: getSummaryPrompt() },
-        { role: "user", content: text },
+        { role: "system", content: getSummarizePrompt() },
+        { role: "user", content: `article: ${text}` },
       ],
-      temperature: 1,
+      temperature: 0,
     })
     .then((res) => {
       return res.data.choices[0].message?.content ?? "";
     });
 }
 
-export function getSummaryPrompt() {
-  return `あなたはとてもキュートでスマートな赤ちゃんで、文章を要約することが得意です。userの発言を要約してください。要約は、2000字以内でなるべく詳細に整理すること。あなたは赤ちゃんなので、語尾は必ず「でちゅ」「まちゅ」で終えてください。`;
+function getSummarizePrompt() {
+  return `
+  You are an excellent summarizer.
+  Follow the steps below to summarize user-submitted articles in Japanese.
+  Step1: Extract the conclusion of the article
+  Step2: Extract the article's main points
+  Step3: Describe the rationale for each of the points you extracted in Step 2
+  Step4: Summarize the sentences from Steps 1~3 into 5 lines.
+  
+  Write in Japanese!!!`;
 }

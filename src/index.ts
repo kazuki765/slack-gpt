@@ -26,10 +26,11 @@ app.command("/summary", async ({ command, ack, say, respond }) => {
 
   const url = command.text.trim();
 
+  const result = await say(
+    generateMention(command.user_id) + " 要約中...\n" + url
+  );
+
   try {
-    const result = await say(
-      generateMention(command.user_id) + " 要約中...\n" + url
-    );
     const summary = await getSummary(url);
 
     await say({
@@ -38,7 +39,10 @@ app.command("/summary", async ({ command, ack, say, respond }) => {
     });
   } catch (e) {
     console.error(e);
-    await say("要約できませんでした");
+    await say({
+      text: "要約できませんでした",
+      thread_ts: result.ts,
+    });
   }
 });
 
