@@ -1,0 +1,7 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-f', 'Dockerfile', '-t', 'gcr.io/$PROJECT_ID/vqbot/${_STAGE}', '--build-arg', 'STAGE=${_STAGE}', '.']
+    substitutions:
+      _STAGE: dev
+    images:
+      - 'gcr.io/$PROJECT_ID/slackgpt/dev'
